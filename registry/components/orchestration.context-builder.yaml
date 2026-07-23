@@ -1,0 +1,12 @@
+id: orchestration.context-builder
+name: Context Builder
+layer: orchestration
+kind: deterministic
+status: active
+purpose_ptbr: "Reúne o contexto mínimo relevante por tarefa (arquivos, contratos, decisões, subgrafo do código) sob orçamento rígido de tokens."
+entrypoint: packages/core/src/execution/context-builder.ts
+contract:
+  input: TaskSpec
+  output: TaskContext
+config_keys: []
+swappable_via: "Port CodeGraphPort: implementação trivial na Camada 2, adaptador Graphify na Camada 5."

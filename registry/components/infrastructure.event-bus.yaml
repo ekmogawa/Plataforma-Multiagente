@@ -1,0 +1,11 @@
+id: infrastructure.event-bus
+name: Event Bus
+layer: infrastructure
+kind: service
+status: active
+purpose_ptbr: "Barramento de eventos em memória (sem broker) para desacoplar componentes. Métricas e Knowledge assinam eventos em vez de serem chamados diretamente."
+entrypoint: packages/core/src/shared/event-bus.ts
+contract:
+  input: PlatformEvent
+config_keys: []
+swappable_via: "Síncrono e determinístico (processo único); todo evento também vira artefato."

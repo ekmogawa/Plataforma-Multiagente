@@ -1,0 +1,60 @@
+{
+  "$ref": "#/definitions/KnowledgeHit",
+  "definitions": {
+    "KnowledgeHit": {
+      "type": "object",
+      "properties": {
+        "noteId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "projeto",
+            "decisao",
+            "licao",
+            "grafo"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "projectSlug": {
+          "$ref": "#/definitions/KnowledgeHit/properties/noteId"
+        },
+        "vaultPath": {
+          "type": "string"
+        },
+        "snippet": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "noteId",
+        "kind",
+        "title",
+        "vaultPath",
+        "snippet",
+        "score",
+        "updatedAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

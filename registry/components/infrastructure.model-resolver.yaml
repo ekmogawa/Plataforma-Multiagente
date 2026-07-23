@@ -1,0 +1,12 @@
+id: infrastructure.model-resolver
+name: Model Resolver
+layer: infrastructure
+kind: adapter
+status: active
+purpose_ptbr: "Resolve um modelo do catálogo para o adaptador do provedor e executa, aplicando a cadeia de fallback em erros retriáveis."
+entrypoint: packages/core/src/adapters/model-resolver.ts
+contract: {}
+config_keys:
+  - models.providers
+  - models.fallbacks
+swappable_via: "config/models.yaml — catálogo e fallbacks; trocar modelo é editar config, nunca código."

@@ -1,0 +1,203 @@
+# =============================================================================
+# Catálogo de modelos + roteamento.
+#
+# ESTE É O ÚNICO ARQUIVO ONDE NOMES DE MODELO APARECEM.
+# Trocar um modelo (ex.: NVIDIA -> OmniRouter numa etapa) é editar uma linha aqui,
+# nunca código. Os nomes em `model:` são os identificadores que o PROVEDOR
+# reconhece — confirme-os no catálogo do provedor.
+#
+# POLÍTICA (decidida pelo usuário — ver docs/adr/0001-nvidia-primeira-linha.md):
+#   NVIDIA é a PRIMEIRA LINHA (endpoints gratuitos, compatíveis com a API OpenAI).
+#   Kimi K3 (via Zenmux) é o FALLBACK ESTRATÉGICO e executor de código complexo.
+#   OmniRouter/Claude permanecem no catálogo como alternativas/futuro.
+# =============================================================================
+
+providers:
+  # PRIMEIRA LINHA — NVIDIA NIM (build.nvidia.com), compatível com a API OpenAI.
+  # A baseUrl é pública (não é segredo); só a chave vai para o .env.
+  nvidia:
+    baseUrl: https://integrate.api.nvidia.com/v1
+    apiKeyEnv: NVIDIA_API_KEY
+    protocol: openai
+  # FALLBACK ESTRATÉGICO — Zenmux (gateway compatível com OpenAI) p/ o Kimi K3.
+  zenmux:
+    baseUrl: ${ZENMUX_BASE_URL}
+    apiKeyEnv: ZENMUX_API_KEY
+    protocol: openai
+  # Gateway OmniRouter — alternativa (DeepSeek, Qwen, GLM, Gemini).
+  omnirouter:
+    baseUrl: ${OMNIROUTER_BASE_URL}
+    apiKeyEnv: OMNIROUTER_API_KEY
+    protocol: openai
+  openai:
+    apiKeyEnv: OPENAI_API_KEY
+    protocol: openai
+  google:
+    apiKeyEnv: GOOGLE_API_KEY
+    protocol: google
+  anthropic:
+    # Claude via assinatura Claude Code / Agent SDK (adaptador ainda não implementado).
+    protocol: claude-agent-sdk
+
+models:
+  # ---------------------------------------------------------------------------
+  # NVIDIA (primeira linha). Preço 0 = gratuito. CONFIRME os model_id no catálogo
+  # NVIDIA — especialmente o GLM, que está como PLACEHOLDER até você confirmar.
+  # ---------------------------------------------------------------------------
+  nvidia-glm:
+    provider: nvidia
+    model: z-ai/glm-5.2
+    tier: mid
+    inPer1M: 0
+    outPer1M: 0
+  # Modelo forte de raciocínio (papel do antigo "nemotron"): DeepSeek V4 Pro.
+  # (nemotron-3-embed-1b é um modelo de EMBEDDING, não serve para chat/plano.)
+  nvidia-deepseek:
+    provider: nvidia
+    model: deepseek-ai/deepseek-v4-pro
+    tier: premium
+    role: reasoning
+    inPer1M: 0
+    outPer1M: 0
+  nvidia-step-flash:
+    provider: nvidia
+    model: stepfun-ai/step-3.7-flash
+    tier: cheap
+    inPer1M: 0
+    outPer1M: 0
+  nvidia-minimax:
+    provider: nvidia
+    model: minimaxai/minimax-m3
+    tier: mid
+    role: vision
+    inPer1M: 0
+    outPer1M: 0
+
+  # ---------------------------------------------------------------------------
+  # Zenmux / Kimi K3 — fallback estratégico e executor de código complexo.
+  # ---------------------------------------------------------------------------
+  zenmux-kimi:
+    provider: zenmux
+    model: Moonshot/Kimi-K3-free                   # confirme o id no Zenmux
+    tier: premium
+    role: complex-code
+    inPer1M: 0
+    outPer1M: 0
+
+  # ---------------------------------------------------------------------------
+  # OmniRouter (alternativas — não são a primeira linha agora).
+  # ---------------------------------------------------------------------------
+  deepseek-flash:
+    provider: omnirouter
+    model: deepseek-v4-flash
+    tier: cheap
+    inPer1M: 0.10
+    outPer1M: 0.40
+  deepseek-reasoner:
+    provider: omnirouter
+    model: deepseek-v4-reasoner
+    tier: mid
+    inPer1M: 0.55
+    outPer1M: 2.20
+  qwen-max:
+    provider: omnirouter
+    model: qwen-3.7-max
+    tier: mid
+    inPer1M: 0.40
+    outPer1M: 1.60
+  glm:
+    provider: omnirouter
+    model: glm-5.2
+    tier: mid
+    inPer1M: 0.30
+    outPer1M: 1.20
+  gemini:
+    provider: omnirouter
+    model: gemini-2.5-pro
+    tier: mid
+    role: vision
+    inPer1M: 0.50
+    outPer1M: 2.00
+
+  # --- Premium (assinatura Claude — adaptador anthropic ainda não implementado) ---
+  # Ficam no catálogo para uso estratégico futuro; NÃO estão em nenhuma capacidade
+  # ativa (evita chamar um protocolo ainda não implementado).
+  claude-code:
+    provider: anthropic
+    model: subscription
+    tier: premium
+    role: coding-agent
+  opus:
+    provider: anthropic
+    model: claude-opus-4-8
+    tier: premium
+    role: escalation
+
+# Capacidades nomeadas. Os componentes NUNCA citam modelos — pedem uma
+# capacidade, e o Capability Resolver escolhe o modelo aqui.
+# `default` é obrigatório. Chaves como "complexity>=4" são condições avaliadas
+# em ordem; a primeira que casar vence, senão usa `default`.
+#
+# PRIMEIRA LINHA = NVIDIA (mapeamento do apêndice, adaptado às capacidades reais):
+#   GLM (nvidia-glm)          : entendimento, requisitos, refino, backend, revisão
+#   DeepSeek V4 Pro (nvidia-deepseek): planejamento/revisão de alto risco
+#                               (complexity>=4), auditor final
+#   (nemotron-3-embed-1b é embedding — NÃO entra aqui; serve p/ busca vetorial futura)
+#   Step Flash (nvidia-step-flash): tarefas rápidas (intake, frontend, QA, docs, reparo)
+#   MiniMax (nvidia-minimax)  : visão (OCR, imagens, PDFs)
+# Fallback de todas: Kimi K3 (zenmux-kimi).
+capabilities:
+  intake-translator:
+    default: nvidia-step-flash
+  understanding:
+    default: nvidia-glm
+    "complexity>=4": nvidia-deepseek
+  complexity-estimator:
+    default: nvidia-glm       # step-flash falhava no JSON estrito desta etapa
+
+  requirements-analyst:
+    default: nvidia-glm
+    "complexity>=4": nvidia-deepseek
+  context-refiner:
+    default: nvidia-glm
+  planner:
+    default: nvidia-glm
+    "complexity>=4": nvidia-deepseek
+  coder-backend:
+    default: nvidia-glm
+  coder-frontend:
+    default: nvidia-step-flash
+  coder-general:
+    default: nvidia-glm
+  qa-analyst:
+    default: nvidia-step-flash
+  failure-analyst:
+    default: nvidia-glm
+  reviewer-code:
+    default: nvidia-glm
+    "complexity>=4": nvidia-deepseek
+  vision:
+    default: nvidia-minimax
+  doc-writer:
+    default: nvidia-step-flash
+  repair:                     # o "consertador de JSON" precisa ser confiável no formato
+    default: nvidia-glm
+  evolution:
+    default: nvidia-glm
+  final-auditor:
+    default: nvidia-deepseek
+
+# Cadeia de fallback: se o modelo falhar (erro retriável do provedor: timeout,
+# 429, 5xx, rede), tenta os próximos. NVIDIA -> Kimi K3 (reserva estratégica).
+fallbacks:
+  nvidia-glm: [zenmux-kimi]
+  nvidia-deepseek: [nvidia-glm, zenmux-kimi]
+  nvidia-step-flash: [nvidia-glm, zenmux-kimi]
+  nvidia-minimax: [gemini]            # visão: Kimi não é modelo de visão; cai no Gemini
+  zenmux-kimi: [glm]                  # último recurso: OmniRouter, se configurado
+  # Cadeias antigas do OmniRouter (mantidas para quem ainda usar esses modelos):
+  deepseek-flash: [qwen-max]
+  qwen-max: [glm, deepseek-reasoner]
+  glm: [qwen-max]
+  deepseek-reasoner: [qwen-max]
+  gemini: [qwen-max]

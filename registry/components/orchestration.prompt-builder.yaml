@@ -1,0 +1,13 @@
+id: orchestration.prompt-builder
+name: Prompt Builder
+layer: orchestration
+kind: deterministic
+status: active
+purpose_ptbr: "Monta o prompt especializado do executor a partir da tarefa, do contexto e dos critérios de aceite, usando a biblioteca de prompts versionada."
+entrypoint: packages/core/src/cognitive/prompt-builder.ts
+contract:
+  input: TaskContext
+  output: PromptPackage
+config_keys: []
+prompts: []
+swappable_via: "Templates em prompts/; versão registrada no PromptPackage para o Evolution Engine."

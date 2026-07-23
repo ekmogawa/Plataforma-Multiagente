@@ -1,0 +1,10 @@
+id: infrastructure.cli
+name: CLI (pm)
+layer: infrastructure
+kind: service
+status: active
+purpose_ptbr: "O comando pm — a interface que o Claude Code aciona. Toda saída tem --json."
+entrypoint: packages/cli/src/index.ts
+contract: {}
+config_keys: []
+swappable_via: "Subcomandos em packages/cli/src/commands; o Claude Code narra a saída --json."

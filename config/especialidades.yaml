@@ -1,0 +1,44 @@
+# =============================================================================
+# Especialidades do worker.llm genérico.
+#
+# Em vez de uma classe de worker por área, UM worker parametrizado por
+# especialidade. Cada entrada mapeia:
+#   capability  -> a capacidade que o Capability Resolver usa para achar o modelo
+#   prompt      -> template na biblioteca de prompts (prompts/<...>)
+#   conventions -> convenções injetadas no contexto da tarefa
+#
+# Adicionar uma nova especialidade (flutter, terraform, unity...) é acrescentar
+# uma entrada aqui — nenhuma classe nova.
+# =============================================================================
+
+especialidades:
+  backend:
+    capability: coder-backend
+    prompt: backend/implementar
+    conventions:
+      - "Seguir os padrões e o estilo já presentes no projeto alvo."
+  frontend:
+    capability: coder-frontend
+    prompt: frontend/implementar
+    conventions:
+      - "Reutilizar componentes e estilos existentes antes de criar novos."
+  sql:
+    capability: coder-backend
+    prompt: database/implementar
+    conventions:
+      - "Migrations reversíveis; nunca alterar dados sem migração."
+  qa:
+    capability: qa-analyst
+    prompt: test/gerar
+    conventions:
+      - "Cobrir o caminho feliz e as bordas que a mudança introduz."
+  docs:
+    capability: doc-writer
+    prompt: docs/gerar
+    conventions:
+      - "Documentar o que mudou, em linguagem clara."
+  devops:
+    capability: coder-general
+    prompt: devops/configurar
+    conventions:
+      - "Mudanças de infra reversíveis e idempotentes."

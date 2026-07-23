@@ -1,0 +1,52 @@
+{
+  "$ref": "#/definitions/RelationsFile",
+  "definitions": {
+    "RelationsFile": {
+      "type": "object",
+      "properties": {
+        "relations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "type": "string",
+                "minLength": 1
+              },
+              "to": {
+                "$ref": "#/definitions/RelationsFile/properties/relations/items/properties/from"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "data-flow",
+                  "invokes",
+                  "reads",
+                  "writes",
+                  "feedback"
+                ]
+              },
+              "payload": {
+                "type": "string"
+              },
+              "note_ptbr": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "from",
+              "to",
+              "type"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "relations"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -1,0 +1,202 @@
+# =============================================================================
+# Relações entre componentes — as arestas do Manual de Relações.
+# Tipos: data-flow (passa payload), invokes, reads, writes, feedback.
+# `payload` (quando presente) referencia um schema em registry/schemas/.
+# =============================================================================
+
+relations:
+  # ---------- Alvo de projeto: análise antes de tudo ----------
+  - from: cognitive.project-analyzer
+    to: infrastructure.projects-store
+    type: reads
+    note_ptbr: "Obtém o ProjectTarget do projeto registrado."
+  - from: cognitive.project-analyzer
+    to: cognitive.intake
+    type: data-flow
+    payload: ProjectMap
+  - from: cognitive.project-analyzer
+    to: cognitive.understanding
+    type: data-flow
+    payload: ProjectMap
+  - from: cognitive.project-analyzer
+    to: orchestration.context-builder
+    type: data-flow
+    payload: ProjectMap
+    note_ptbr: "Mapa gerado 1x por run e reutilizado."
+
+  # ---------- Camada Cognitiva (fluxo principal) ----------
+  - from: cognitive.intake
+    to: cognitive.understanding
+    type: data-flow
+    payload: StructuredRequest
+  - from: cognitive.understanding
+    to: cognitive.complexity-estimator
+    type: data-flow
+    payload: UnderstandingReport
+  - from: cognitive.complexity-estimator
+    to: cognitive.strategy-selector
+    type: data-flow
+    payload: ComplexityAssessment
+  - from: cognitive.strategy-selector
+    to: cognitive.planning-engine
+    type: data-flow
+    payload: ExecutionStrategy
+  - from: cognitive.understanding
+    to: cognitive.planning-engine
+    type: data-flow
+    payload: UnderstandingReport
+    note_ptbr: "O plano usa os requisitos, não só a estratégia."
+  - from: cognitive.planning-engine
+    to: cognitive.workflow-generator
+    type: data-flow
+    payload: Plan
+  - from: cognitive.planning-engine
+    to: infrastructure.artifact-store
+    type: writes
+    note_ptbr: "Toda saída de etapa vira artefato (rastreabilidade)."
+
+  # ---------- Cognitiva -> Orquestração ----------
+  - from: cognitive.workflow-generator
+    to: orchestration.background-orchestrator
+    type: data-flow
+    payload: WorkflowDAG
+
+  # ---------- Camada de Orquestração ----------
+  - from: orchestration.background-orchestrator
+    to: orchestration.scheduler
+    type: invokes
+  - from: orchestration.background-orchestrator
+    to: infrastructure.event-bus
+    type: writes
+    payload: PlatformEvent
+    note_ptbr: "Publica eventos do ciclo de vida do run/tarefa."
+  - from: orchestration.scheduler
+    to: orchestration.task-router
+    type: data-flow
+    payload: TaskSpec
+  - from: orchestration.task-router
+    to: infrastructure.capability-resolver
+    type: invokes
+    note_ptbr: "Pede uma capacidade; nunca um modelo."
+  - from: infrastructure.capability-resolver
+    to: infrastructure.model-resolver
+    type: invokes
+  - from: infrastructure.model-resolver
+    to: infrastructure.omnirouter-adapter
+    type: invokes
+  - from: orchestration.task-router
+    to: orchestration.context-builder
+    type: data-flow
+    payload: TaskSpec
+  - from: orchestration.context-builder
+    to: orchestration.prompt-builder
+    type: data-flow
+    payload: TaskContext
+  - from: orchestration.prompt-builder
+    to: execution.execution-manager
+    type: data-flow
+    payload: PromptPackage
+  - from: infrastructure.event-bus
+    to: orchestration.metrics-manager
+    type: invokes
+    note_ptbr: "Métricas ASSINAM eventos — não são chamadas diretamente."
+  - from: orchestration.metrics-manager
+    to: infrastructure.metrics-store
+    type: writes
+    payload: MetricEvent
+
+  # ---------- Camada de Execução (determinístico primeiro) ----------
+  - from: execution.execution-manager
+    to: execution.deterministic-engine
+    type: invokes
+    note_ptbr: "SEMPRE consultado primeiro (zero tokens)."
+  - from: execution.execution-manager
+    to: execution.llm-engine
+    type: invokes
+    note_ptbr: "Só recebe o que o Deterministic Engine não consegue cumprir."
+  - from: execution.deterministic-engine
+    to: execution.worker-scaffold
+    type: invokes
+  - from: execution.llm-engine
+    to: execution.worker-llm
+    type: invokes
+  - from: execution.llm-engine
+    to: execution.worker-claude-agent
+    type: invokes
+  - from: execution.execution-manager
+    to: infrastructure.cache
+    type: reads
+    note_ptbr: "Cache por hash de prompt evita reprocessar a mesma chamada."
+  - from: execution.execution-manager
+    to: infrastructure.artifact-store
+    type: writes
+    note_ptbr: "Prompts, respostas, diffs e logs viram artefatos."
+  - from: execution.execution-manager
+    to: execution.acceptance-engine
+    type: data-flow
+    payload: ExecutionResult
+  - from: execution.acceptance-engine
+    to: orchestration.scheduler
+    type: feedback
+    payload: ValidationReport
+    note_ptbr: "Falha reenfileira a tarefa com o resumo do erro (escada de retry)."
+
+  # ---------- Camada de Governança ----------
+  - from: execution.acceptance-engine
+    to: governance.gatekeeper
+    type: data-flow
+    payload: ValidationReport
+  - from: governance.gatekeeper
+    to: governance.project-manager
+    type: data-flow
+    payload: GateReview
+  - from: governance.project-manager
+    to: orchestration.scheduler
+    type: feedback
+    note_ptbr: "Escalação: replanejar, dividir, rotear ou perguntar ao usuário."
+  - from: governance.project-manager
+    to: governance.git-manager
+    type: data-flow
+    payload: ApprovalRecord
+  - from: governance.git-manager
+    to: governance.deploy-manager
+    type: invokes
+    note_ptbr: "FUTURO: deploy pós-merge. Fora da v1."
+
+  # ---------- Camada de Conhecimento / Aprendizado ----------
+  - from: governance.project-manager
+    to: knowledge.knowledge-manager
+    type: data-flow
+    payload: ApprovalRecord
+  - from: infrastructure.event-bus
+    to: knowledge.knowledge-manager
+    type: invokes
+    note_ptbr: "Knowledge também ASSINA eventos."
+  - from: knowledge.knowledge-manager
+    to: infrastructure.artifact-store
+    type: reads
+    note_ptbr: "Consome os artefatos produzidos no run."
+  - from: knowledge.knowledge-manager
+    to: knowledge.obsidian-vault
+    type: writes
+  - from: knowledge.knowledge-manager
+    to: knowledge.graphify
+    type: invokes
+  - from: knowledge.knowledge-manager
+    to: knowledge.knowledge-processor
+    type: invokes
+  - from: knowledge.knowledge-processor
+    to: orchestration.context-builder
+    type: reads
+    note_ptbr: "O Context Builder consulta o conhecimento PROCESSADO."
+  - from: knowledge.graphify
+    to: orchestration.context-builder
+    type: reads
+    note_ptbr: "O grafo alimenta o CodeGraphPort: contexto mínimo por tarefa."
+  - from: knowledge.knowledge-processor
+    to: knowledge.evolution-engine
+    type: invokes
+  - from: knowledge.evolution-engine
+    to: infrastructure.metrics-store
+    type: reads
+    payload: MetricEvent

@@ -1,0 +1,11 @@
+id: orchestration.metrics-manager
+name: Metrics Manager
+layer: orchestration
+kind: deterministic
+status: active
+purpose_ptbr: "Coleta indicadores de cada execução (tempo, custo, tokens, retries, qualidade) e os grava como MetricEvent."
+entrypoint: packages/core/src/orchestration/metrics-collector.ts
+contract:
+  output: MetricEvent
+config_keys: []
+swappable_via: "Escreve via Metrics Store (infrastructure.metrics-store); consultado por pm metrics."

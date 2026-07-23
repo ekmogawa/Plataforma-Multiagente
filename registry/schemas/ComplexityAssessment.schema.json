@@ -1,0 +1,55 @@
+{
+  "$ref": "#/definitions/ComplexityAssessment",
+  "definitions": {
+    "ComplexityAssessment": {
+      "type": "object",
+      "properties": {
+        "itemId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "score": {
+          "type": "number",
+          "enum": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "drivers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "size",
+              "modules",
+              "architecture",
+              "external-deps",
+              "technical-risk",
+              "migration",
+              "security"
+            ]
+          },
+          "default": []
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "estimatedTokens": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "itemId",
+        "score",
+        "rationale"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

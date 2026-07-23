@@ -1,0 +1,12 @@
+id: execution.llm-engine
+name: LLM Engine
+layer: execution
+kind: service
+status: active
+purpose_ptbr: "Encapsula os executores que usam modelo: o worker.llm genérico (por especialidade) e o worker.claude-agent. Só recebe tarefas que o Deterministic Engine não consegue cumprir."
+entrypoint: packages/core/src/execution/workers/llm.ts
+contract:
+  input: PromptPackage
+  output: ExecutionResult
+config_keys: []
+swappable_via: "Resolve capacidade -> modelo via Capability/Model Resolver; especialidades em config/especialidades.yaml."

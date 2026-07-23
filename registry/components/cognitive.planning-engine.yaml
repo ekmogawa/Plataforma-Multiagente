@@ -1,0 +1,16 @@
+id: cognitive.planning-engine
+name: Planning Engine
+layer: cognitive
+kind: llm-stage
+status: active
+purpose_ptbr: "Transforma o problema em um plano: épico -> funcionalidade -> tarefa -> subtarefa, cada nó com critérios de aceite e dependências."
+entrypoint: packages/core/src/cognitive/planning-engine.ts
+contract:
+  input: UnderstandingReport
+  output: Plan
+capability: planner
+config_keys:
+  - capabilities.planner
+prompts:
+  - planning/gerar-plano
+swappable_via: "config/models.yaml -> capabilities.planner (Claude); prompt em prompts/planning/."

@@ -1,0 +1,8 @@
+id: knowledge.vector-store
+name: Vector Store (Qdrant)
+layer: knowledge
+kind: store
+status: planned
+purpose_ptbr: "FUTURO: busca semântica com Qdrant. Entra quando a busca FTS5 falhar comprovadamente. Fora da v1."
+config_keys: []
+swappable_via: "O contrato de busca (KnowledgeQuery) nasce abstrato para a troca ser só de adaptador."

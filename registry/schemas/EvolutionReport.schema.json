@@ -1,0 +1,174 @@
+{
+  "$ref": "#/definitions/EvolutionReport",
+  "definitions": {
+    "EvolutionReport": {
+      "type": "object",
+      "properties": {
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "window": {
+          "type": "string"
+        },
+        "totals": {
+          "type": "object",
+          "properties": {
+            "metricsAnalyzed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "proposals": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "metricsAnalyzed",
+            "proposals"
+          ],
+          "additionalProperties": false
+        },
+        "proposals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "createdAt": {
+                "$ref": "#/definitions/EvolutionReport/properties/generatedAt"
+              },
+              "target": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "capability",
+                      "prompt",
+                      "strategy",
+                      "especialidade"
+                    ]
+                  },
+                  "file": {
+                    "type": "string"
+                  },
+                  "locator": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "file",
+                  "locator"
+                ],
+                "additionalProperties": false
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "routing",
+                  "prompt-revision",
+                  "strategy-tuning",
+                  "cost-optimization"
+                ]
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "diff": {
+                "type": "string",
+                "default": ""
+              },
+              "evidence": {
+                "type": "object",
+                "properties": {
+                  "metric": {
+                    "type": "string"
+                  },
+                  "scope": {
+                    "type": "string"
+                  },
+                  "sampleSize": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "value": {
+                    "type": "number"
+                  },
+                  "baseline": {
+                    "type": "number"
+                  },
+                  "window": {
+                    "type": "string",
+                    "default": "all-time"
+                  },
+                  "metricRefs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "default": []
+                  }
+                },
+                "required": [
+                  "metric",
+                  "scope",
+                  "sampleSize",
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              "confidence": {
+                "type": "string",
+                "enum": [
+                  "baixa",
+                  "media",
+                  "alta"
+                ]
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "heuristica",
+                  "llm"
+                ]
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "proposed",
+                  "applied",
+                  "dismissed"
+                ],
+                "default": "proposed"
+              }
+            },
+            "required": [
+              "id",
+              "createdAt",
+              "target",
+              "category",
+              "rationale",
+              "evidence",
+              "confidence",
+              "source"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        }
+      },
+      "required": [
+        "generatedAt",
+        "window",
+        "totals"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

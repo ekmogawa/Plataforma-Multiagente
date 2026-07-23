@@ -1,0 +1,73 @@
+{
+  "$ref": "#/definitions/MetricEvent",
+  "definitions": {
+    "MetricEvent": {
+      "type": "object",
+      "properties": {
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "llm_call",
+            "task_result",
+            "validation",
+            "retry",
+            "gate",
+            "cache_hit",
+            "escalation"
+          ]
+        },
+        "runId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "taskId": {
+          "$ref": "#/definitions/MetricEvent/properties/runId"
+        },
+        "model": {
+          "type": "string"
+        },
+        "promptId": {
+          "$ref": "#/definitions/MetricEvent/properties/runId"
+        },
+        "promptVersion": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "tokensIn": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tokensOut": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "costUsd": {
+          "type": "number",
+          "minimum": 0
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "meta": {
+          "type": "object",
+          "additionalProperties": {},
+          "default": {}
+        }
+      },
+      "required": [
+        "ts",
+        "kind"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

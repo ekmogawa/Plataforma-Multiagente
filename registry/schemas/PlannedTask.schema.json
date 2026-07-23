@@ -1,0 +1,136 @@
+{
+  "$ref": "#/definitions/PlannedTask",
+  "definitions": {
+    "PlannedTask": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "planNodeId": {
+          "$ref": "#/definitions/PlannedTask/properties/id"
+        },
+        "runId": {
+          "$ref": "#/definitions/PlannedTask/properties/id"
+        },
+        "projectSlug": {
+          "$ref": "#/definitions/PlannedTask/properties/id"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "backend",
+            "frontend",
+            "database",
+            "test",
+            "docs",
+            "devops",
+            "analysis"
+          ]
+        },
+        "complexity": {
+          "type": "number",
+          "enum": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "input": {
+          "type": "object",
+          "properties": {
+            "files": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "default": []
+            },
+            "instructions": {
+              "type": "string",
+              "minLength": 1
+            },
+            "contextRefs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "file",
+                      "doc",
+                      "decision",
+                      "schema",
+                      "graph"
+                    ]
+                  },
+                  "ref": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "ref"
+                ],
+                "additionalProperties": false
+              },
+              "default": []
+            }
+          },
+          "required": [
+            "instructions"
+          ],
+          "additionalProperties": false
+        },
+        "acceptanceCriteria": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/definitions/PlannedTask/properties/id"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "checkKind": {
+                "type": "string",
+                "enum": [
+                  "script",
+                  "llm",
+                  "manual"
+                ]
+              },
+              "check": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "text",
+              "checkKind"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        }
+      },
+      "required": [
+        "id",
+        "planNodeId",
+        "runId",
+        "projectSlug",
+        "type",
+        "complexity",
+        "input"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

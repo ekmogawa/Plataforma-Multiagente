@@ -1,0 +1,13 @@
+id: orchestration.scheduler
+name: Scheduler
+layer: orchestration
+kind: service
+status: active
+purpose_ptbr: "Loop que promove tarefas prontas, reivindica com lease, despacha e aplica a escada de retry com escalonamento ao Project Manager."
+entrypoint: packages/core/src/orchestration/orchestrator/scheduler.ts
+contract:
+  input: WorkflowDAG
+config_keys:
+  - platform.orchestrator
+  - platform.escalation
+swappable_via: "Transições de estado em SQLite; retomável via pm run --resume."

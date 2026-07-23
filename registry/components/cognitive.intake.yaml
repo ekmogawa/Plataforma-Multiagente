@@ -1,0 +1,15 @@
+id: cognitive.intake
+name: Intake Engine
+layer: cognitive
+kind: llm-stage
+status: active
+purpose_ptbr: "Traduz o pedido leigo do usuário em uma solicitação técnica estruturada."
+entrypoint: packages/core/src/cognitive/intake.ts
+contract:
+  output: StructuredRequest
+capability: intake-translator
+config_keys:
+  - capabilities.intake-translator
+prompts:
+  - intake/traduzir-pedido
+swappable_via: "config/models.yaml -> capabilities.intake-translator; prompt em prompts/intake/."

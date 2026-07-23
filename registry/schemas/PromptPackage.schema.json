@@ -1,0 +1,62 @@
+{
+  "$ref": "#/definitions/PromptPackage",
+  "definitions": {
+    "PromptPackage": {
+      "type": "object",
+      "properties": {
+        "taskId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "promptId": {
+          "$ref": "#/definitions/PromptPackage/properties/taskId"
+        },
+        "promptVersion": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "system": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        },
+        "model": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/definitions/PromptPackage/properties/taskId"
+            },
+            "provider": {
+              "type": "string"
+            },
+            "tier": {
+              "type": "string",
+              "enum": [
+                "cheap",
+                "mid",
+                "premium"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "provider",
+            "tier"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "taskId",
+        "promptId",
+        "promptVersion",
+        "system",
+        "user",
+        "model"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

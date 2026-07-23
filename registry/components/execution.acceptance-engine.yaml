@@ -1,0 +1,12 @@
+id: execution.acceptance-engine
+name: Acceptance Engine
+layer: execution
+kind: deterministic
+status: active
+purpose_ptbr: "Valida a tarefa: compila, faz lint, roda testes e checa critérios de aceite. Em falha, devolve resumo para o retry."
+entrypoint: packages/core/src/execution/acceptance/acceptance-engine.ts
+contract:
+  input: ExecutionResult
+  output: ValidationReport
+config_keys: []
+swappable_via: "Rigor definido pela ValidationLevel da estratégia (smoke/standard/strict)."

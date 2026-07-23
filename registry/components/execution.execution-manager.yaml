@@ -1,0 +1,12 @@
+id: execution.execution-manager
+name: Execution Manager
+layer: execution
+kind: service
+status: planned
+purpose_ptbr: "Coordena os workers executores: inicia, acompanha execução, consolida resultados e sincroniza tarefas concluídas."
+entrypoint: packages/core/src/execution/execution-manager.ts
+contract:
+  input: PromptPackage
+  output: ExecutionResult
+config_keys: []
+swappable_via: "Despacha para workers determinísticos ou LLM conforme o executorKind da TaskSpec."

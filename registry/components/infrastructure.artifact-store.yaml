@@ -1,0 +1,11 @@
+id: infrastructure.artifact-store
+name: Artifact Store
+layer: infrastructure
+kind: store
+status: active
+purpose_ptbr: "Materializa o princípio 'toda informação produzida é persistida ou reproduzível'. Índice no banco + conteúdo em workspace/runs/<run-id>/, identificável por run_id + task_id."
+entrypoint: packages/core/src/artifacts/artifact-store.ts
+contract:
+  input: Artifact
+config_keys: []
+swappable_via: "Tabela artifacts + arquivos em workspace/runs; base do modo replay e da auditoria."

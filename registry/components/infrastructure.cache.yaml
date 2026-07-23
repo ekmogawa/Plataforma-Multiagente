@@ -1,0 +1,10 @@
+id: infrastructure.cache
+name: Response Cache
+layer: infrastructure
+kind: store
+status: active
+purpose_ptbr: "Cacheia respostas de modelo por hash do prompt — evita reprocessar a mesma requisição (economia de tokens)."
+entrypoint: packages/core/src/db/cache-repo.ts
+contract: {}
+config_keys: []
+swappable_via: "Tabela cache no SQLite; chave derivada de modelo+system+user+schema."

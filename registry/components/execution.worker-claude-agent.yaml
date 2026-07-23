@@ -1,0 +1,13 @@
+id: execution.worker-claude-agent
+name: Claude Agent Worker
+layer: execution
+kind: adapter
+status: planned
+purpose_ptbr: "Executa tarefas de código complexas editando arquivos no diretório do projeto, via Claude Agent SDK, de forma não-assistida."
+entrypoint: packages/core/src/execution/workers/claude-agent.ts
+contract:
+  input: PromptPackage
+  output: ExecutionResult
+config_keys:
+  - models.models.claude-code
+swappable_via: "Implementa CodingAgentPort; allowlist de ferramentas restrita ao subdiretório do projeto."

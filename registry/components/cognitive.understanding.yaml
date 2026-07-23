@@ -1,0 +1,16 @@
+id: cognitive.understanding
+name: Understanding Engine
+layer: cognitive
+kind: llm-stage
+status: active
+purpose_ptbr: "Transforma a solicitação em requisitos de engenharia (funcionais, não-funcionais, riscos, ambiguidades)."
+entrypoint: packages/core/src/cognitive/understanding.ts
+contract:
+  input: StructuredRequest
+  output: UnderstandingReport
+capability: understanding
+config_keys:
+  - capabilities.understanding
+prompts:
+  - understanding/extrair-requisitos
+swappable_via: "config/models.yaml -> capabilities.understanding (GLM); prompt em prompts/understanding/."

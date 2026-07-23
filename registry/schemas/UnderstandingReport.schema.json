@@ -1,0 +1,93 @@
+{
+  "$ref": "#/definitions/UnderstandingReport",
+  "definitions": {
+    "UnderstandingReport": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requirements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/definitions/UnderstandingReport/properties/requestId"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "functional",
+                  "non-functional"
+                ]
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "priority": {
+                "type": "string",
+                "enum": [
+                  "must",
+                  "should",
+                  "could",
+                  "wont"
+                ],
+                "default": "should"
+              },
+              "source": {
+                "type": "string",
+                "default": "inferido"
+              },
+              "dependsOn": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/UnderstandingReport/properties/requestId"
+                },
+                "default": []
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "text"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "risks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "externalDependencies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "ambiguities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "expectedImpact": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "requestId",
+        "requirements"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

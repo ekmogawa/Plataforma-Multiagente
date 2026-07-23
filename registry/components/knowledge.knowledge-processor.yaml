@@ -1,0 +1,16 @@
+id: knowledge.knowledge-processor
+name: Knowledge Processor
+layer: knowledge
+kind: llm-stage
+status: active
+purpose_ptbr: "Destila o conhecimento bruto em útil, OFFLINE e NÃO-DESTRUTIVO: resumo extrativo, tags por frequência e wikilinks entre notas relacionadas (Jaccard). Marca 'processado'. Notas quase-duplicadas são LIGADAS, nunca apagadas. Refino por modelo é opcional (dormente sem chave)."
+entrypoint: packages/core/src/knowledge/knowledge-processor.ts
+contract:
+  input: KnowledgeNote
+  output: DistilledNote
+config_keys:
+  - capabilities.context-refiner
+capability: context-refiner
+prompts:
+  - knowledge/destilar
+swappable_via: "config/models.yaml -> capabilities.context-refiner (refino opcional). Roda após run aprovado e sob demanda; o Context Builder consulta o conhecimento PROCESSADO, não o bruto."

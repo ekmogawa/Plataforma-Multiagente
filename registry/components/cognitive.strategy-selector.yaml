@@ -1,0 +1,13 @@
+id: cognitive.strategy-selector
+name: Strategy Selector
+layer: cognitive
+kind: deterministic
+status: active
+purpose_ptbr: "Determinístico: mapeia a complexidade para a estratégia de execução (profundidade, validação, teto de modelo, retries, orçamento)."
+entrypoint: packages/core/src/cognitive/strategy-selector.ts
+contract:
+  input: ComplexityAssessment
+  output: ExecutionStrategy
+config_keys:
+  - strategies
+swappable_via: "config/strategies.yaml — lookup determinístico, sem LLM."

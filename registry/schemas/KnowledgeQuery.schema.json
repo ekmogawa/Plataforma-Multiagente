@@ -1,0 +1,51 @@
+{
+  "$ref": "#/definitions/KnowledgeQuery",
+  "definitions": {
+    "KnowledgeQuery": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "projectSlug": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kinds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "projeto",
+              "decisao",
+              "licao",
+              "grafo"
+            ]
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "processedOnly": {
+          "type": "boolean",
+          "default": true
+        },
+        "limit": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 50,
+          "default": 8
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

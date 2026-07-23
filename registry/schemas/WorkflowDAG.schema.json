@@ -1,0 +1,81 @@
+{
+  "$ref": "#/definitions/WorkflowDAG",
+  "definitions": {
+    "WorkflowDAG": {
+      "type": "object",
+      "properties": {
+        "runId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "taskId": {
+                "$ref": "#/definitions/WorkflowDAG/properties/runId"
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "ready",
+                  "running",
+                  "validating",
+                  "done",
+                  "failed",
+                  "retrying",
+                  "escalated",
+                  "blocked",
+                  "cancelled"
+                ]
+              },
+              "dependsRemaining": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "attempt": {
+                "type": "integer",
+                "minimum": 0,
+                "default": 0
+              }
+            },
+            "required": [
+              "taskId",
+              "state",
+              "dependsRemaining"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "$ref": "#/definitions/WorkflowDAG/properties/runId"
+              },
+              "to": {
+                "$ref": "#/definitions/WorkflowDAG/properties/runId"
+              }
+            },
+            "required": [
+              "from",
+              "to"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "runId",
+        "nodes",
+        "edges"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

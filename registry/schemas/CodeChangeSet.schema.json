@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/CodeChangeSet",
+  "definitions": {
+    "CodeChangeSet": {
+      "type": "object",
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "action": {
+                "type": "string",
+                "enum": [
+                  "created",
+                  "modified",
+                  "deleted"
+                ]
+              },
+              "content": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "path",
+              "action"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -1,0 +1,36 @@
+# Dependências
+node_modules/
+.pnpm-store/
+
+# Build
+dist/
+*.tsbuildinfo
+
+# Runtime da plataforma (artefatos, não versionar)
+workspace/projects/
+workspace/runs/
+workspace/db/
+
+# Ambiente
+.env
+.env.local
+*.local
+
+# Editor/SO
+.DS_Store
+Thumbs.db
+.vscode/
+!.vscode/extensions.json
+
+# Documentos pessoais do usuário (não publicar)
+arquivos pessoais/
+
+# Notas geradas em runtime no vault (mantém a estrutura, ignora o conteúdo gerado)
+knowledge/projetos/*
+knowledge/decisoes/*
+knowledge/licoes/*
+knowledge/grafos/*
+!knowledge/projetos/.gitkeep
+!knowledge/decisoes/.gitkeep
+!knowledge/licoes/.gitkeep
+!knowledge/grafos/.gitkeep

@@ -1,0 +1,121 @@
+{
+  "$ref": "#/definitions/StructuredRequest",
+  "definitions": {
+    "StructuredRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "rawPrompt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "translatedIntent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workKind": {
+          "type": "string",
+          "enum": [
+            "feature",
+            "bugfix",
+            "refactor",
+            "optimization",
+            "ui-adjustment",
+            "analysis",
+            "new-project"
+          ]
+        },
+        "projectSlug": {
+          "$ref": "#/definitions/StructuredRequest/properties/id"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "deliverableType": {
+          "type": "string",
+          "enum": [
+            "webapp",
+            "api",
+            "script",
+            "automation",
+            "library",
+            "other"
+          ]
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "mentionedArtifacts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "openQuestions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/definitions/StructuredRequest/properties/id"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "why": {
+                "type": "string"
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "blocking": {
+                "type": "boolean",
+                "default": false
+              }
+            },
+            "required": [
+              "id",
+              "text"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        }
+      },
+      "required": [
+        "id",
+        "createdAt",
+        "rawPrompt",
+        "translatedIntent",
+        "workKind",
+        "domain",
+        "deliverableType"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

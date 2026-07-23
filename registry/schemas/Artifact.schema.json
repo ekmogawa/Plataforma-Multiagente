@@ -1,0 +1,76 @@
+{
+  "$ref": "#/definitions/Artifact",
+  "definitions": {
+    "Artifact": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runId": {
+          "$ref": "#/definitions/Artifact/properties/id"
+        },
+        "taskId": {
+          "$ref": "#/definitions/Artifact/properties/id"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "plan",
+            "dag",
+            "prompt",
+            "response",
+            "patch",
+            "diff",
+            "report",
+            "log",
+            "evidence",
+            "test-result",
+            "project-map",
+            "decision",
+            "event",
+            "context",
+            "planned-tasks",
+            "gate-review",
+            "approval"
+          ]
+        },
+        "path": {
+          "type": "string"
+        },
+        "hash": {
+          "type": "string"
+        },
+        "classification": {
+          "type": "string",
+          "enum": [
+            "public",
+            "project-internal",
+            "sensitive"
+          ],
+          "default": "project-internal"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "meta": {
+          "type": "object",
+          "additionalProperties": {},
+          "default": {}
+        }
+      },
+      "required": [
+        "id",
+        "runId",
+        "kind",
+        "path",
+        "hash",
+        "createdAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

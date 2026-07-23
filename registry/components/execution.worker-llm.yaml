@@ -1,0 +1,13 @@
+id: execution.worker-llm
+name: LLM Worker (genérico)
+layer: execution
+kind: llm-stage
+status: active
+purpose_ptbr: "Um único worker parametrizado por ESPECIALIDADE (backend, frontend, sql, docs, qa...). Adicionar uma nova especialidade é editar YAML, não criar classe."
+entrypoint: packages/core/src/execution/workers/llm.ts
+contract:
+  input: PromptPackage
+  output: ExecutionResult
+config_keys:
+  - especialidades
+swappable_via: "config/especialidades.yaml mapeia especialidade -> capacidade + template de prompt + convenções. A capacidade resolve o modelo."

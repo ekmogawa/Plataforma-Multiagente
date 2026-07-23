@@ -1,0 +1,72 @@
+{
+  "$ref": "#/definitions/ExecutionStrategy",
+  "definitions": {
+    "ExecutionStrategy": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "type": "string",
+          "enum": [
+            "trivial",
+            "standard",
+            "complex",
+            "critical"
+          ]
+        },
+        "planningDepth": {
+          "type": "string",
+          "enum": [
+            "flat",
+            "epics",
+            "full"
+          ]
+        },
+        "validationLevel": {
+          "type": "string",
+          "enum": [
+            "smoke",
+            "standard",
+            "strict"
+          ]
+        },
+        "modelTierCeiling": {
+          "type": "string",
+          "enum": [
+            "cheap",
+            "mid",
+            "premium"
+          ]
+        },
+        "maxRetries": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4
+        },
+        "budgetTokens": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "concurrency": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8,
+          "default": 3
+        },
+        "requiresHumanApproval": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "required": [
+        "profile",
+        "planningDepth",
+        "validationLevel",
+        "modelTierCeiling",
+        "maxRetries",
+        "budgetTokens"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

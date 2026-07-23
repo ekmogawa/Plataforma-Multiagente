@@ -1,0 +1,16 @@
+id: cognitive.complexity-estimator
+name: Complexity Estimator
+layer: cognitive
+kind: llm-stage
+status: active
+purpose_ptbr: "Classifica objetivamente a complexidade (1..5) de cada item, com os fatores que a determinam."
+entrypoint: packages/core/src/cognitive/complexity-estimator.ts
+contract:
+  input: UnderstandingReport
+  output: ComplexityAssessment
+capability: complexity-estimator
+config_keys:
+  - capabilities.complexity-estimator
+prompts:
+  - complexity/estimar
+swappable_via: "config/models.yaml -> capabilities.complexity-estimator; prompt em prompts/complexity/."

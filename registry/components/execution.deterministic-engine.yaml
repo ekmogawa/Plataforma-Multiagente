@@ -1,0 +1,12 @@
+id: execution.deterministic-engine
+name: Deterministic Engine
+layer: execution
+kind: deterministic
+status: active
+purpose_ptbr: "Princípio da plataforma: consultado SEMPRE antes de qualquer modelo. Registra e despacha os executores determinísticos (scaffold, fsops, lint-fix, test-runner, deps, git) — zero tokens."
+entrypoint: packages/core/src/execution/deterministic-workers.ts
+contract:
+  input: TaskSpec
+  output: ExecutionResult
+config_keys: []
+swappable_via: "Responde 'consigo cumprir esta tarefa?'; só sem alternativa a tarefa vai para o LLM Engine."

@@ -1,0 +1,57 @@
+{
+  "$ref": "#/definitions/ProjectTarget",
+  "definitions": {
+    "ProjectTarget": {
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rootPath": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "registered",
+            "new"
+          ]
+        },
+        "stack": {
+          "type": "string"
+        },
+        "defaultBranch": {
+          "type": "string",
+          "default": "main"
+        },
+        "permissions": {
+          "type": "object",
+          "properties": {
+            "read": {
+              "type": "boolean",
+              "default": true
+            },
+            "write": {
+              "type": "boolean",
+              "default": true
+            },
+            "deploy": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          "additionalProperties": false,
+          "default": {}
+        }
+      },
+      "required": [
+        "slug",
+        "rootPath",
+        "kind"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

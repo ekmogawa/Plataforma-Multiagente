@@ -1,0 +1,12 @@
+id: cognitive.workflow-generator
+name: Workflow Generator
+layer: cognitive
+kind: deterministic
+status: active
+purpose_ptbr: "Determinístico: converte a árvore do plano em um DAG de tarefas, validando topologia e detectando ciclos."
+entrypoint: packages/core/src/cognitive/workflow-generator.ts
+contract:
+  input: Plan
+  output: WorkflowDAG
+config_keys: []
+swappable_via: "Lógica determinística; sem modelo. Tarefas independentes rodam em paralelo."

@@ -1,0 +1,68 @@
+{
+  "$ref": "#/definitions/PlatformEvent",
+  "definitions": {
+    "PlatformEvent": {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "enum": [
+            "RunRequested",
+            "ProjectAnalyzed",
+            "IntentCreated",
+            "RequirementsReady",
+            "ComplexityEstimated",
+            "StrategySelected",
+            "PlanningCompleted",
+            "WorkflowCreated",
+            "RunPlanned",
+            "TaskStarted",
+            "TaskCompleted",
+            "TaskFailed",
+            "TaskEscalated",
+            "RunApproved",
+            "RunPaused",
+            "ArtifactStored",
+            "GatekeeperReviewed",
+            "RunAwaitingApproval",
+            "RunRejected",
+            "CommitCreated",
+            "PullRequestCreated",
+            "KnowledgeCaptured"
+          ]
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "runId": {
+          "$ref": "#/definitions/PlatformEvent/properties/eventId"
+        },
+        "taskId": {
+          "$ref": "#/definitions/PlatformEvent/properties/eventId"
+        },
+        "producer": {
+          "type": "string"
+        },
+        "payloadRef": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "additionalProperties": {},
+          "default": {}
+        }
+      },
+      "required": [
+        "name",
+        "ts"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

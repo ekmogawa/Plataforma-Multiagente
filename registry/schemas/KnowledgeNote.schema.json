@@ -1,0 +1,86 @@
+{
+  "$ref": "#/definitions/KnowledgeNote",
+  "definitions": {
+    "KnowledgeNote": {
+      "type": "object",
+      "properties": {
+        "noteId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "projeto",
+            "decisao",
+            "licao",
+            "grafo"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "body": {
+          "type": "string",
+          "default": ""
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "headings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "projectSlug": {
+          "$ref": "#/definitions/KnowledgeNote/properties/noteId"
+        },
+        "runId": {
+          "$ref": "#/definitions/KnowledgeNote/properties/noteId"
+        },
+        "vaultPath": {
+          "type": "string"
+        },
+        "wikilinks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "processed": {
+          "type": "boolean",
+          "default": false
+        },
+        "hash": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "$ref": "#/definitions/KnowledgeNote/properties/createdAt"
+        }
+      },
+      "required": [
+        "noteId",
+        "kind",
+        "title",
+        "vaultPath",
+        "hash",
+        "createdAt",
+        "updatedAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

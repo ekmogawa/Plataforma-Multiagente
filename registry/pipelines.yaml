@@ -1,0 +1,54 @@
+# =============================================================================
+# O pipeline principal como sequência ordenada de componentes.
+# A visão "de cima" da plataforma: do pedido (sobre um projeto existente) à
+# memória persistente processada.
+# =============================================================================
+
+pipelines:
+  - name: engenharia-principal
+    description_ptbr: "De um pedido sobre um projeto existente ao software aprovado, versionado e aprendido."
+    steps:
+      - order: 1
+        component: cognitive.project-analyzer
+      - order: 2
+        component: cognitive.intake
+      - order: 3
+        component: cognitive.understanding
+      - order: 4
+        component: cognitive.complexity-estimator
+      - order: 5
+        component: cognitive.strategy-selector
+      - order: 6
+        component: cognitive.planning-engine
+      - order: 7
+        component: cognitive.workflow-generator
+      - order: 8
+        component: orchestration.background-orchestrator
+      - order: 9
+        component: orchestration.scheduler
+      - order: 10
+        component: orchestration.task-router
+      - order: 11
+        component: orchestration.context-builder
+      - order: 12
+        component: orchestration.prompt-builder
+      - order: 13
+        component: execution.execution-manager
+      - order: 14
+        component: execution.deterministic-engine
+      - order: 15
+        component: execution.llm-engine
+      - order: 16
+        component: execution.acceptance-engine
+      - order: 17
+        component: governance.gatekeeper
+      - order: 18
+        component: governance.project-manager
+      - order: 19
+        component: governance.git-manager
+      - order: 20
+        component: knowledge.knowledge-manager
+      - order: 21
+        component: knowledge.knowledge-processor
+      - order: 22
+        component: knowledge.evolution-engine

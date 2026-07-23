@@ -1,0 +1,28 @@
+# =============================================================================
+# Parâmetros operacionais da plataforma.
+# =============================================================================
+
+orchestrator:
+  # Intervalo do loop do scheduler (ms).
+  tickMs: 500
+  # Concorrência padrão de tarefas (a estratégia do run pode sobrescrever).
+  defaultConcurrency: 3
+  # Timeout padrão por tarefa (ms) quando a TaskSpec não define.
+  defaultTaskTimeoutMs: 300000
+  # Backoff exponencial entre tentativas.
+  retryBackoff:
+    baseMs: 2000
+    factor: 2
+    maxMs: 60000
+  # Folga somada ao timeout para o lease (detecção de tarefas órfãs).
+  leaseGraceMs: 5000
+
+budget:
+  # Avisa quando o run atinge esta fração do orçamento de tokens.
+  warnAtFraction: 0.6
+  # Pausa automática do run nesta fração (guardrail de custo).
+  pauseAtFraction: 0.8
+
+escalation:
+  # Número de escalações no mesmo run antes de pausar e chamar o usuário.
+  maxPerRun: 3

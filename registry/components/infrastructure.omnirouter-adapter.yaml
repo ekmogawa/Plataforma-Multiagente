@@ -1,0 +1,11 @@
+id: infrastructure.omnirouter-adapter
+name: OmniRouter Adapter
+layer: infrastructure
+kind: adapter
+status: active
+purpose_ptbr: "Fala com gateways compatíveis com a API OpenAI (OmniRouter, OpenAI) — cobre DeepSeek, Qwen, GLM, Gemini."
+entrypoint: packages/core/src/adapters/omnirouter.ts
+contract: {}
+config_keys:
+  - models.providers.omnirouter
+swappable_via: "Implemente ModelPort em packages/core/src/adapters e registre outro adaptador; models.yaml aponta o provider."

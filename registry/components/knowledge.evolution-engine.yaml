@@ -1,0 +1,16 @@
+id: knowledge.evolution-engine
+name: Evolution Engine
+layer: knowledge
+kind: llm-stage
+status: active
+purpose_ptbr: "Lê as métricas acumuladas e PROPÕE melhorias (roteamento, prompts, estratégias) com evidência rastreável. GUARDRAIL DURO: analyze() nunca escreve em config/prompts/strategies — só emite propostas (pm evolve report). Offline as propostas saem com source='heuristica' (mecânicas, não fabricadas). Aplicar (pm evolve apply) é humano e fica planned."
+entrypoint: packages/core/src/knowledge/evolution-engine.ts
+contract:
+  input: MetricEvent
+  output: EvolutionReport
+capability: evolution
+config_keys:
+  - capabilities.evolution
+prompts:
+  - evolution/analisar
+swappable_via: "config/models.yaml -> capabilities.evolution (refino opcional do rationale/diff). Guardrail: nunca edita config sem aprovação na v1 — só relatório."

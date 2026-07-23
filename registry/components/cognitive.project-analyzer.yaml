@@ -1,0 +1,12 @@
+id: cognitive.project-analyzer
+name: Project Analyzer
+layer: cognitive
+kind: deterministic
+status: active
+purpose_ptbr: "Produz o mapa do projeto alvo (estrutura, dependências, framework, convenções, comando de teste) UMA vez por run. Reutilizado por Intake, Understanding e Context Builder."
+entrypoint: packages/core/src/cognitive/project-analyzer.ts
+contract:
+  input: ProjectTarget
+  output: ProjectMap
+config_keys: []
+swappable_via: "Determinístico, zero tokens. Enriquecimento futuro (arquitetura, hotspots via git) sem mudar o contrato."

@@ -1,0 +1,26 @@
+{
+  "name": "plataforma-multiagente",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Plataforma de engenharia de software assistida por IA — pipeline multiagente",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "pm": "node packages/cli/dist/index.js",
+    "gen:schemas": "pnpm --filter @pm/contracts gen:schemas",
+    "registry:validate": "pnpm --filter @pm/registry-tools run validate",
+    "registry:docs": "pnpm --filter @pm/registry-tools run docs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "packageManager": "pnpm@11.15.1"
+}

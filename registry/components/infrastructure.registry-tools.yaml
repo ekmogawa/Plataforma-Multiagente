@@ -1,0 +1,10 @@
+id: infrastructure.registry-tools
+name: Registry Tools
+layer: infrastructure
+kind: service
+status: active
+purpose_ptbr: "Valida o Manual de Relações (registry/) e gera a documentação humana (docs/manual-de-relacoes.md, diagramas)."
+entrypoint: packages/registry-tools/src/index.ts
+contract: {}
+config_keys: []
+swappable_via: "Validação e geração em packages/registry-tools/src; roda no pre-commit e no pm doctor."

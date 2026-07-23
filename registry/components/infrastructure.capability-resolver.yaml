@@ -1,0 +1,11 @@
+id: infrastructure.capability-resolver
+name: Capability Resolver
+layer: infrastructure
+kind: adapter
+status: active
+purpose_ptbr: "Resolve uma capacidade nomeada (planner, coder-backend...) em um modelo, considerando complexidade e o teto de tier da estratégia. Os componentes nunca citam modelos."
+entrypoint: packages/core/src/adapters/capability-resolver.ts
+contract: {}
+config_keys:
+  - capabilities
+swappable_via: "Trocar a estratégia de seleção aqui não mexe no Model Resolver."

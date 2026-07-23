@@ -1,0 +1,12 @@
+id: execution.worker-echo
+name: Echo Worker
+layer: execution
+kind: deterministic
+status: active
+purpose_ptbr: "Executor falso para testar o orquestrador sem custo de LLM: devolve sucesso/falha configurável. Habilita testes offline."
+entrypoint: packages/core/src/execution/workers/echo.ts
+contract:
+  input: TaskSpec
+  output: ExecutionResult
+config_keys: []
+swappable_via: "Selecionado por executorId=worker.echo; usado nos testes de orquestração."

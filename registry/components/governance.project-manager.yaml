@@ -1,0 +1,12 @@
+id: governance.project-manager
+name: Project Manager
+layer: governance
+kind: deterministic
+status: active
+purpose_ptbr: "Monta o dossiê de evidências em pt-BR para a decisão humana: o que você pediu, o que mudou, testes, revisão de qualidade e custo. Não decide sozinho — apresenta e registra a decisão do usuário (aprovar/rejeitar via pm approve/reject)."
+entrypoint: packages/core/src/governance/project-manager.ts
+contract:
+  input: GateReview
+  output: ApprovalRecord
+config_keys: []
+swappable_via: "Determinístico: modelo de evidências em pt-BR (evidence-template.ts). A decisão é sempre humana — pm approve/reject grava o ApprovalRecord."

@@ -1,0 +1,10 @@
+id: knowledge.graphify
+name: Graphify
+layer: knowledge
+kind: deterministic
+status: active
+purpose_ptbr: "A memória estrutural do código: varre o projeto (com teto) e monta o grafo de imports, com relatório navegável no Obsidian (mermaid + hubs) e um graph.json. Se estourar o teto, escreve o grafo parcial e narra o corte. Reduz o custo de reorientação em tokens."
+entrypoint: packages/core/src/knowledge/graphify-worker.ts
+contract: {}
+config_keys: []
+swappable_via: "v1: análise de imports embutida (StaticImportCodeGraph), zero token. O graph.json alimenta o PersistedCodeGraph (troca futura do Context Builder). CLI externa via child process fica planned."

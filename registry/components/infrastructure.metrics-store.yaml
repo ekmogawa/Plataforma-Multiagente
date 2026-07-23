@@ -1,0 +1,11 @@
+id: infrastructure.metrics-store
+name: Metrics Store
+layer: infrastructure
+kind: store
+status: active
+purpose_ptbr: "Persiste MetricEvent — toda chamada de modelo e resultado de tarefa. Combustível do Evolution Engine."
+entrypoint: packages/core/src/db/metrics-repo.ts
+contract:
+  input: MetricEvent
+config_keys: []
+swappable_via: "Tabela metric_events no SQLite; consultada por pm metrics e pelo Evolution Engine."

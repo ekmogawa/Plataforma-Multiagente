@@ -1,0 +1,12 @@
+id: execution.worker-scaffold
+name: Scaffold Worker
+layer: execution
+kind: deterministic
+status: active
+purpose_ptbr: "Cria estrutura de projeto a partir de templates (zero tokens). Determinístico vem antes de LLM por eficiência."
+entrypoint: packages/core/src/execution/workers/scaffold.ts
+contract:
+  input: TaskSpec
+  output: ExecutionResult
+config_keys: []
+swappable_via: "Selecionado por executorId=worker.scaffold."

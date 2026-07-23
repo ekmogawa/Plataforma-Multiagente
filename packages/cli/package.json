@@ -1,0 +1,19 @@
+{
+  "name": "@pm/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "pm": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@pm/contracts": "workspace:*",
+    "@pm/core": "workspace:*",
+    "@pm/registry-tools": "workspace:*"
+  }
+}

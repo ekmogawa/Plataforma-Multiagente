@@ -1,0 +1,11 @@
+id: knowledge.obsidian-vault
+name: Obsidian Vault
+layer: knowledge
+kind: store
+status: active
+purpose_ptbr: "A memória legível: a pasta knowledge/ é um vault Obsidian. O ObsidianWriter é o ÚNICO ponto de escrita — REDIGE segredos, compõe markdown determinístico (frontmatter + wikilinks) e indexa no FTS5. Idempotente por hash. O usuário navega; a IA lê via índice."
+entrypoint: packages/core/src/knowledge/obsidian-writer.ts
+contract:
+  output: KnowledgeNote
+config_keys: []
+swappable_via: "Markdown puro em knowledge/; nenhum plugin obrigatório. Índice em SQLite FTS5 (KnowledgeStore) — a busca é abstrata (KnowledgeQuery), troca p/ Qdrant é só adaptador."

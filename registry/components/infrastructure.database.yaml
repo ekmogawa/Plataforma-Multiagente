@@ -1,0 +1,10 @@
+id: infrastructure.database
+name: Database (SQLite)
+layer: infrastructure
+kind: store
+status: active
+purpose_ptbr: "Banco SQLite com estado de runs, tarefas, métricas e cache. Aplica migrações no startup."
+entrypoint: packages/core/src/db/database.ts
+contract: {}
+config_keys: []
+swappable_via: "Estado local em workspace/db/platform.db; migrações em packages/core/src/db/migrations.ts."

@@ -1,0 +1,12 @@
+id: knowledge.knowledge-manager
+name: Knowledge Manager
+layer: knowledge
+kind: service
+status: active
+purpose_ptbr: "Assina o Event Bus: ao aprovar um run (RunApproved), registra o conhecimento no vault — nota do run, lições dos achados do Gatekeeper, ADR das restrições, índice do projeto —, dispara a destilação e o Graphify. Determinístico e best-effort (nunca derruba o approve)."
+entrypoint: packages/core/src/knowledge/knowledge-manager.ts
+contract:
+  input: ApprovalRecord
+  output: KnowledgeNote
+config_keys: []
+swappable_via: "Escreve markdown no vault (knowledge.obsidian-vault); indexa via FTS5 para a IA ler. Assina o bus como o MetricsCollector — nunca é chamado direto."

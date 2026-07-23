@@ -1,0 +1,8 @@
+id: governance.deploy-manager
+name: Deploy Manager
+layer: governance
+kind: deterministic
+status: planned
+purpose_ptbr: "FUTURO: deploy automático pós-merge (alvos como Cloudflare/VPS). Fora da v1 — registrado para o fluxo já ficar documentado."
+config_keys: []
+swappable_via: "Acionado pelo Git Manager após o merge; alvo configurável. Entra depois da v1."

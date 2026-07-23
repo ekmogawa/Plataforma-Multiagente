@@ -1,0 +1,102 @@
+{
+  "$ref": "#/definitions/ModelsConfig",
+  "definitions": {
+    "ModelsConfig": {
+      "type": "object",
+      "properties": {
+        "providers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "baseUrl": {
+                "type": "string"
+              },
+              "apiKeyEnv": {
+                "type": "string"
+              },
+              "protocol": {
+                "type": "string",
+                "enum": [
+                  "openai",
+                  "google",
+                  "claude-agent-sdk",
+                  "anthropic"
+                ]
+              }
+            },
+            "required": [
+              "protocol"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "models": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "provider": {
+                "type": "string"
+              },
+              "model": {
+                "type": "string"
+              },
+              "tier": {
+                "type": "string",
+                "enum": [
+                  "cheap",
+                  "mid",
+                  "premium"
+                ]
+              },
+              "role": {
+                "type": "string"
+              },
+              "inPer1M": {
+                "type": "number",
+                "minimum": 0
+              },
+              "outPer1M": {
+                "type": "number",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "provider",
+              "model",
+              "tier"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "capabilities": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "fallbacks": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "default": {}
+        }
+      },
+      "required": [
+        "providers",
+        "models",
+        "capabilities"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

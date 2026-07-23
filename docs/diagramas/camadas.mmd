@@ -1,0 +1,68 @@
+flowchart LR
+  subgraph cognitive["Camada Cognitiva"]
+    cognitive_complexity_estimator["Complexity Estimator"]
+    cognitive_intake["Intake Engine"]
+    cognitive_planning_engine["Planning Engine"]
+    cognitive_project_analyzer["Project Analyzer"]
+    cognitive_strategy_selector["Strategy Selector"]
+    cognitive_understanding["Understanding Engine"]
+    cognitive_workflow_generator["Workflow Generator"]
+  end
+  subgraph orchestration["Camada de Orquestração"]
+    orchestration_background_orchestrator["Background Orchestrator"]
+    orchestration_context_builder["Context Builder"]
+    orchestration_metrics_manager["Metrics Manager"]
+    orchestration_prompt_builder["Prompt Builder"]
+    orchestration_scheduler["Scheduler"]
+    orchestration_task_router["Task Router"]
+  end
+  subgraph execution["Camada de Execução"]
+    execution_acceptance_engine["Acceptance Engine"]
+    execution_deterministic_engine["Deterministic Engine"]
+    execution_execution_manager["Execution Manager"]
+    execution_llm_engine["LLM Engine"]
+    execution_worker_claude_agent["Claude Agent Worker"]
+    execution_worker_echo["Echo Worker"]
+    execution_worker_llm["LLM Worker (genérico)"]
+    execution_worker_scaffold["Scaffold Worker"]
+  end
+  subgraph governance["Camada de Governança"]
+    governance_deploy_manager["Deploy Manager"]
+    governance_gatekeeper["Gatekeeper"]
+    governance_git_manager["Git Manager"]
+    governance_project_manager["Project Manager"]
+  end
+  subgraph knowledge["Camada de Conhecimento e Evolução"]
+    knowledge_evolution_engine["Evolution Engine"]
+    knowledge_graphify["Graphify"]
+    knowledge_knowledge_manager["Knowledge Manager"]
+    knowledge_knowledge_processor["Knowledge Processor"]
+    knowledge_obsidian_vault["Obsidian Vault"]
+    knowledge_vector_store["Vector Store (Qdrant)"]
+  end
+  subgraph infrastructure["Infraestrutura"]
+    infrastructure_artifact_store["Artifact Store"]
+    infrastructure_cache["Response Cache"]
+    infrastructure_capability_resolver["Capability Resolver"]
+    infrastructure_cli["CLI (pm)"]
+    infrastructure_database["Database (SQLite)"]
+    infrastructure_event_bus["Event Bus"]
+    infrastructure_metrics_store["Metrics Store"]
+    infrastructure_model_resolver["Model Resolver"]
+    infrastructure_omnirouter_adapter["OmniRouter Adapter"]
+    infrastructure_projects_store["Projects Store"]
+    infrastructure_registry_tools["Registry Tools"]
+  end
+  cognitive --> infrastructure
+  cognitive --> orchestration
+  orchestration --> infrastructure
+  orchestration --> execution
+  infrastructure --> orchestration
+  execution --> infrastructure
+  execution --> orchestration
+  execution --> governance
+  governance --> orchestration
+  governance --> knowledge
+  infrastructure --> knowledge
+  knowledge --> infrastructure
+  knowledge --> orchestration

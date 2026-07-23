@@ -1,0 +1,101 @@
+{
+  "$ref": "#/definitions/Plan",
+  "definitions": {
+    "Plan": {
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "roots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/definitions/Plan/properties/requestId"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "epic",
+                  "feature",
+                  "task",
+                  "subtask"
+                ]
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "default": ""
+              },
+              "acceptanceCriteria": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "#/definitions/Plan/properties/requestId"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "checkKind": {
+                      "type": "string",
+                      "enum": [
+                        "script",
+                        "llm",
+                        "manual"
+                      ]
+                    },
+                    "check": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "text",
+                    "checkKind"
+                  ],
+                  "additionalProperties": false
+                },
+                "default": []
+              },
+              "dependsOn": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Plan/properties/requestId"
+                },
+                "default": []
+              },
+              "children": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Plan/properties/roots/items"
+                },
+                "default": []
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "title"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "requestId",
+        "roots"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

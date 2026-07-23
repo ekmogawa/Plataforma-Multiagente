@@ -1,0 +1,11 @@
+id: orchestration.background-orchestrator
+name: Background Orchestrator
+layer: orchestration
+kind: service
+status: active
+purpose_ptbr: "Núcleo operacional: mantém o estado do workflow, agenda tarefas, paraleliza, aplica retry/timeout e sincroniza dependências."
+entrypoint: packages/core/src/orchestration/orchestrator/background-orchestrator.ts
+contract: {}
+config_keys:
+  - platform.orchestrator
+swappable_via: "Máquina de estados própria sobre SQLite; parâmetros em config/platform.yaml."

@@ -1,0 +1,46 @@
+{
+  "$ref": "#/definitions/ApprovalRecord",
+  "definitions": {
+    "ApprovalRecord": {
+      "type": "object",
+      "properties": {
+        "runId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "approvedBy": {
+          "type": "string",
+          "enum": [
+            "pm-agent",
+            "human"
+          ]
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "summaryPtBr": {
+          "type": "string"
+        },
+        "decision": {
+          "type": "string",
+          "enum": [
+            "approved",
+            "rejected"
+          ]
+        }
+      },
+      "required": [
+        "runId",
+        "approvedBy",
+        "summaryPtBr",
+        "decision"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

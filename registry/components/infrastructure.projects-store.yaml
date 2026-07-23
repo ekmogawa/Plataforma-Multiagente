@@ -1,0 +1,11 @@
+id: infrastructure.projects-store
+name: Projects Store
+layer: infrastructure
+kind: store
+status: active
+purpose_ptbr: "Registro dos projetos existentes que a plataforma evolui. Cada run aponta para um projeto (feature, bug, ajuste)."
+entrypoint: packages/core/src/db/projects-repo.ts
+contract:
+  input: ProjectTarget
+config_keys: []
+swappable_via: "Tabela projects no SQLite; alimentada por pm projeto add."

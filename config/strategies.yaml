@@ -1,0 +1,53 @@
+# =============================================================================
+# Mapa complexidade -> estratégia de execução (Strategy Selector, determinístico).
+#
+# O score de complexidade (1..5) seleciona um perfil. O perfil define como o
+# restante do pipeline se comporta: profundidade do plano, rigor da validação,
+# teto de custo de modelo, retries e orçamento de tokens.
+# Editar aqui muda o comportamento sem tocar em código.
+# =============================================================================
+
+# Faixa de score -> perfil.
+scoreToProfile:
+  "1": trivial
+  "2": standard
+  "3": standard
+  "4": complex
+  "5": critical
+
+profiles:
+  trivial:
+    planningDepth: flat
+    validationLevel: smoke
+    modelTierCeiling: cheap
+    maxRetries: 2
+    budgetTokens: 50000
+    concurrency: 2
+    requiresHumanApproval: false
+
+  standard:
+    planningDepth: epics
+    validationLevel: standard
+    modelTierCeiling: mid
+    maxRetries: 3
+    budgetTokens: 200000
+    concurrency: 3
+    requiresHumanApproval: true
+
+  complex:
+    planningDepth: full
+    validationLevel: strict
+    modelTierCeiling: premium
+    maxRetries: 3
+    budgetTokens: 600000
+    concurrency: 3
+    requiresHumanApproval: true
+
+  critical:
+    planningDepth: full
+    validationLevel: strict
+    modelTierCeiling: premium
+    maxRetries: 4
+    budgetTokens: 1200000
+    concurrency: 2
+    requiresHumanApproval: true

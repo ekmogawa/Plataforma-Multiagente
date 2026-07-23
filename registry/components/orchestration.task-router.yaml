@@ -1,0 +1,14 @@
+id: orchestration.task-router
+name: Task Router
+layer: orchestration
+kind: deterministic
+status: active
+purpose_ptbr: "Escolhe o melhor executor/modelo para cada tarefa por tipo e complexidade, respeitando o teto da estratégia e aplicando fallback."
+entrypoint: packages/core/src/orchestration/task-router.ts
+contract:
+  input: PlannedTask
+  output: TaskSpec
+config_keys:
+  - models.routing
+  - models.fallbacks
+swappable_via: "config/models.yaml -> routing/fallbacks; troca de rota é edição de config."

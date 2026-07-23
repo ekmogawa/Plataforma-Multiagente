@@ -1,0 +1,44 @@
+flowchart TD
+  cognitive_project_analyzer["cognitive.project-analyzer"]
+  cognitive_intake["cognitive.intake"]
+  cognitive_understanding["cognitive.understanding"]
+  cognitive_complexity_estimator["cognitive.complexity-estimator"]
+  cognitive_strategy_selector["cognitive.strategy-selector"]
+  cognitive_planning_engine["cognitive.planning-engine"]
+  cognitive_workflow_generator["cognitive.workflow-generator"]
+  orchestration_background_orchestrator["orchestration.background-orchestrator"]
+  orchestration_scheduler["orchestration.scheduler"]
+  orchestration_task_router["orchestration.task-router"]
+  orchestration_context_builder["orchestration.context-builder"]
+  orchestration_prompt_builder["orchestration.prompt-builder"]
+  execution_execution_manager["execution.execution-manager"]
+  execution_deterministic_engine["execution.deterministic-engine"]
+  execution_llm_engine["execution.llm-engine"]
+  execution_acceptance_engine["execution.acceptance-engine"]
+  governance_gatekeeper["governance.gatekeeper"]
+  governance_project_manager["governance.project-manager"]
+  governance_git_manager["governance.git-manager"]
+  knowledge_knowledge_manager["knowledge.knowledge-manager"]
+  knowledge_knowledge_processor["knowledge.knowledge-processor"]
+  knowledge_evolution_engine["knowledge.evolution-engine"]
+  cognitive_project_analyzer --> cognitive_intake
+  cognitive_intake --> cognitive_understanding
+  cognitive_understanding --> cognitive_complexity_estimator
+  cognitive_complexity_estimator --> cognitive_strategy_selector
+  cognitive_strategy_selector --> cognitive_planning_engine
+  cognitive_planning_engine --> cognitive_workflow_generator
+  cognitive_workflow_generator --> orchestration_background_orchestrator
+  orchestration_background_orchestrator --> orchestration_scheduler
+  orchestration_scheduler --> orchestration_task_router
+  orchestration_task_router --> orchestration_context_builder
+  orchestration_context_builder --> orchestration_prompt_builder
+  orchestration_prompt_builder --> execution_execution_manager
+  execution_execution_manager --> execution_deterministic_engine
+  execution_deterministic_engine --> execution_llm_engine
+  execution_llm_engine --> execution_acceptance_engine
+  execution_acceptance_engine --> governance_gatekeeper
+  governance_gatekeeper --> governance_project_manager
+  governance_project_manager --> governance_git_manager
+  governance_git_manager --> knowledge_knowledge_manager
+  knowledge_knowledge_manager --> knowledge_knowledge_processor
+  knowledge_knowledge_processor --> knowledge_evolution_engine

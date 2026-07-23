@@ -1,0 +1,11 @@
+id: governance.git-manager
+name: Git Manager
+layer: governance
+kind: deterministic
+status: active
+purpose_ptbr: "Integra ao repositório com segurança: exige working tree limpa, cria uma branch por run (pm/run-<id>), grava um commit WIP durante o trabalho e o reescreve na aprovação. Nunca commita na branch principal; com remote+gh, faz push best-effort e abre o PR (nunca --force). Rejeição descarta a branch."
+entrypoint: packages/core/src/execution/git-manager.ts
+contract:
+  input: ApprovalRecord
+config_keys: []
+swappable_via: "Determinístico via node:child_process (sem simple-git). Entrega (push/PR) em git-delivery.ts, best-effort só quando há remote e gh."

@@ -1,0 +1,15 @@
+id: governance.gatekeeper
+name: Gatekeeper
+layer: governance
+kind: llm-stage
+status: active
+purpose_ptbr: "Revisa o diff do run antes da aprovação humana: segredos, arquivos grandes, padrões proibidos (eval), dívida técnica. Checagens determinísticas rodam sempre; um revisor com modelo reforça quando há chave. Emite um veredicto (approve/revise/escalate) e a lista de achados — nunca vaza o segredo, só o tipo e o arquivo."
+entrypoint: packages/core/src/governance/gatekeeper.ts
+contract:
+  output: GateReview
+capability: reviewer-code
+config_keys:
+  - capabilities.reviewer-code
+prompts:
+  - gatekeeper/revisar-run
+swappable_via: "config/models.yaml -> capabilities.reviewer-code (GLM); offline degrada para só-determinístico. Veredicto approve/revise/escalate em verdict.ts."

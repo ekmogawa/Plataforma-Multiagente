@@ -1,0 +1,97 @@
+{
+  "$ref": "#/definitions/ComponentSpec",
+  "definitions": {
+    "ComponentSpec": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "layer": {
+          "type": "string",
+          "enum": [
+            "cognitive",
+            "orchestration",
+            "execution",
+            "governance",
+            "knowledge",
+            "infrastructure"
+          ]
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "llm-stage",
+            "deterministic",
+            "service",
+            "adapter",
+            "store"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "planned",
+            "active",
+            "deprecated"
+          ]
+        },
+        "purpose_ptbr": {
+          "type": "string",
+          "minLength": 1
+        },
+        "entrypoint": {
+          "type": "string"
+        },
+        "contract": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string"
+            },
+            "output": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "default": {}
+        },
+        "capability": {
+          "type": "string"
+        },
+        "config_keys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "prompts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "swappable_via": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "layer",
+        "kind",
+        "status",
+        "purpose_ptbr"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

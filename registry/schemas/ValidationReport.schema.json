@@ -1,0 +1,60 @@
+{
+  "$ref": "#/definitions/ValidationReport",
+  "definitions": {
+    "ValidationReport": {
+      "type": "object",
+      "properties": {
+        "taskId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "passed": {
+          "type": "boolean"
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "compile",
+                  "lint",
+                  "test",
+                  "criterion"
+                ]
+              },
+              "passed": {
+                "type": "boolean"
+              },
+              "evidence": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "name",
+              "kind",
+              "passed"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "failureSummary": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "taskId",
+        "passed"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
